@@ -1,0 +1,13 @@
+# ~/.config/starship.toml
+
+format = "🐳 $all"
+
+[username]
+style_root = "magenta bold"
+style_user = "green bold"
+format = "[$user]($style)"
+show_always = true
+
+[hostname]
+format = "[@$hostname](bold green) "
+ssh_only = false
