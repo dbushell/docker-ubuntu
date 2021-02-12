@@ -1,6 +1,6 @@
 # 🐳 Ubuntu Docker Sandbox
 
-A configured Ubuntu sandbox container with Zsh and Starship shell prompt.
+A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, and Node.js.
 
 ```sh
 docker pull ghcr.io/dbushell/ubuntu:latest

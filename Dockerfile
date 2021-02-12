@@ -18,7 +18,7 @@ RUN echo $TZ > /etc/timezone
 # Update system and install packages
 RUN apt update
 RUN apt upgrade -y
-RUN apt install tzdata locales sudo zsh htop vim git curl -y
+RUN apt install -y tzdata locales sudo zsh htop vim git curl
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8
