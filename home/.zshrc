@@ -11,7 +11,7 @@ export HISTFILE=~/.zsh_history
 export EDITOR=vim
 
 export NPM_PACKAGES="$HOME/.npm-packages"
-export PATH="$PATH:$NPM_PACKAGES/bin"
+export PATH="$NPM_PACKAGES/bin:$PATH"
 
 setopt append_history
 setopt share_history

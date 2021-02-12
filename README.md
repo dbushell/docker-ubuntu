@@ -3,7 +3,7 @@
 A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, and Node.js.
 
 ```sh
-docker pull ghcr.io/dbushell/ubuntu:latest
+docker pull ghcr.io/dbushell/ubuntu
 ```
 
 ## Usage
@@ -13,7 +13,7 @@ Docker CLI:
 ```sh
 docker run -d \
   --name=sandbox \
-  ghcr.io/dbushell/ubuntu:latest \
+  ghcr.io/dbushell/ubuntu \
   && docker exec -it sandbox zsh
 ```
 
@@ -24,7 +24,7 @@ version: '3'
 services:
   ubuntu:
     container_name: sandbox
-    image: ghcr.io/dbushell/ubuntu:latest
+    image: ghcr.io/dbushell/ubuntu
 ```
 
 ```sh
