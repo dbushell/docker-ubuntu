@@ -37,13 +37,13 @@ docker-compose up -d \
 ### Shell Access
 
 ```sh
-docker exec -it ubuntu zsh
+docker exec -it sandbox zsh
 ```
 
 or:
 
 ```sh
-docker-compose exec ubuntu zsh
+docker-compose exec sandbox zsh
 ```
 
 ### Clean Up
