@@ -51,3 +51,7 @@ docker-compose exec sandbox zsh
 ```sh
 docker stop sandbox && docker rm sandbox
 ```
+
+* * *
+
+[MIT License](/LICENSE) | Copyright © 2021 [David Bushell](https://dbushell.com) | [@dbushell](https://twitter.com/dbushell)

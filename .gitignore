@@ -1,6 +1,7 @@
 /*
-!.gitignore
-!README.md
 !.dockerignore
+!.gitignore
 !Dockerfile
+!README.md
+!LICENSE
 !home
