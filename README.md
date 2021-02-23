@@ -2,6 +2,8 @@
 
 A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, and Node.js.
 
+[Why this exists.](https://dbushell.com/2021/02/22/macos-big-reinstall-docker-traefik-localhost/)
+
 ```sh
 docker pull ghcr.io/dbushell/ubuntu
 ```
