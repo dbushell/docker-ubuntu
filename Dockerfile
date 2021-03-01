@@ -1,5 +1,7 @@
 FROM ubuntu:20.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 ARG USER
 ENV USER ${USER:-user}
 ARG PUID
@@ -47,8 +49,6 @@ RUN chown -R ${PUID}:${PGID} $HOME
 # Ready default user
 WORKDIR ${HOME}
 USER ${USER}
-
-RUN ["/bin/zsh", "-c", "npm install -g npm"]
 
 # Keep container alive
 CMD tail -f /dev/null

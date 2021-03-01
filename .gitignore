@@ -1,7 +1,8 @@
 /*
 !.dockerignore
 !.gitignore
+!build.sh
 !Dockerfile
-!README.md
 !LICENSE
+!README.md
 !home
