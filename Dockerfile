@@ -31,7 +31,7 @@ RUN locale-gen en_GB.UTF-8 \
 RUN curl -fsSL https://starship.rs/install.sh | bash -s -- -y
 
 # Install NPM and Node
-RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash
 RUN apt install -y nodejs
 
 # Setup user and home directory
