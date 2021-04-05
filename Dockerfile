@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 as ubuntu-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -21,7 +21,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y tzdata locales sudo zsh htop vim git curl
+  && apt install -y curl git htop locales lsb-release net-tools sudo tzdata vim wget zsh
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8 \
@@ -29,10 +29,6 @@ RUN locale-gen en_GB.UTF-8 \
 
 # Install Starship shell prompt
 RUN curl -fsSL https://starship.rs/install.sh | bash -s -- -y
-
-# Install NPM and Node
-RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash
-RUN apt install -y nodejs
 
 # Setup user and home directory
 RUN useradd -u ${PUID} -U -d ${HOME} -s /bin/zsh ${USER} \
@@ -45,6 +41,39 @@ RUN useradd -u ${PUID} -U -d ${HOME} -s /bin/zsh ${USER} \
 
 COPY home/ ${HOME}/
 RUN chown -R ${PUID}:${PGID} $HOME
+
+FROM ubuntu-base as ubuntu-node
+
+# Install NPM and Node
+RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash
+RUN apt update \
+  && apt upgrade -y \
+  && apt install -y nodejs
+
+FROM ubuntu-base as ubuntu-deno
+
+# Install build tools
+RUN apt update \
+  && apt upgrade -y \
+  && apt install -y build-essential
+
+WORKDIR ${HOME}
+USER ${USER}
+
+# Install Rust
+ENV PATH "${HOME}/.cargo/bin:$PATH"
+RUN curl https://sh.rustup.rs -o rustup.sh \
+  && chmod +x rustup.sh \
+  && ./rustup.sh -y
+
+# Download and build Deno
+RUN git clone https://github.com/denoland/deno.git deno
+WORKDIR ${HOME}/deno
+RUN cargo build --release --bin deno
+
+FROM ubuntu-node
+
+COPY --from=ubuntu-deno ${HOME}/deno/target/release/deno /usr/local/bin
 
 # Ready default user
 WORKDIR ${HOME}

@@ -1,6 +1,6 @@
 # 🐳 Ubuntu Docker Sandbox
 
-A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, and Node.js.
+A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, Deno, and Node.
 
 [Why does this exists?](https://dbushell.com/2021/02/22/macos-big-reinstall-docker-traefik-localhost/)
 
