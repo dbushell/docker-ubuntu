@@ -21,7 +21,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y curl git htop locales lsb-release net-tools sudo tzdata vim wget zsh
+  && apt install -y curl dnsutils git htop iputils-ping locales lsb-release net-tools sudo screen tzdata vim wget zsh
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8 \
@@ -52,6 +52,9 @@ RUN apt update \
 
 FROM ubuntu-base as ubuntu-deno
 
+ARG DENO_TAG
+ENV DENO_TAG ${DENO_TAG:-v1.9.0}
+
 # Install build tools
 RUN apt update \
   && apt upgrade -y \
@@ -67,7 +70,7 @@ RUN curl https://sh.rustup.rs -o rustup.sh \
   && ./rustup.sh -y
 
 # Download and build Deno
-RUN git clone https://github.com/denoland/deno.git deno
+RUN git clone https://github.com/denoland/deno.git -b ${DENO_TAG}
 WORKDIR ${HOME}/deno
 RUN cargo build --release --bin deno
 
