@@ -21,7 +21,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y curl dnsutils git htop iputils-ping locales lsb-release net-tools sudo screen tzdata vim wget zsh
+  && apt install -y curl dnsutils git htop iproute2 iputils-ping locales lsb-release net-tools sudo screen tzdata vim wget zsh
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8 \
