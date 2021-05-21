@@ -53,7 +53,7 @@ RUN apt update \
 FROM ubuntu-base as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.10.1}
+ENV DENO_TAG ${DENO_TAG:-v1.10.2}
 
 # Install build tools
 RUN apt update \
@@ -81,6 +81,9 @@ COPY --from=ubuntu-deno ${HOME}/deno/target/release/deno /usr/local/bin
 # Ready default user
 WORKDIR ${HOME}
 USER ${USER}
+
+# Update NPM
+RUN npm install -g npm
 
 # Keep container alive
 CMD tail -f /dev/null
