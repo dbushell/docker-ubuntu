@@ -11,3 +11,9 @@ show_always = true
 [hostname]
 format = "[@$hostname](bold green) "
 ssh_only = false
+
+[memory_usage]
+style = "dimmed"
+disabled = false
+threshold = -1
+format = "[${ram}]($style) "
