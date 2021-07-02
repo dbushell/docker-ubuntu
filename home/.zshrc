@@ -10,6 +10,8 @@ export HISTFILE=~/.zsh_history
 
 export EDITOR=vim
 
+export PATH="/home/user/.deno/bin:$PATH"
+
 export NPM_PACKAGES="$HOME/.npm-packages"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
