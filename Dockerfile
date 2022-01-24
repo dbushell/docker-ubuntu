@@ -53,7 +53,7 @@ RUN apt update \
 FROM ubuntu-base as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.17.2}
+ENV DENO_TAG ${DENO_TAG:-v1.18.0}
 
 # Install build tools
 RUN apt update \
