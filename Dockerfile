@@ -28,7 +28,7 @@ RUN locale-gen en_GB.UTF-8 \
   && update-locale LANG=en_GB.UTF-8
 
 # Install Starship shell prompt
-RUN curl -fsSL https://starship.rs/install.sh | bash -s -- -y
+RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 # Setup user and home directory
 RUN useradd -u ${PUID} -U -d ${HOME} -s /bin/zsh ${USER} \
@@ -53,7 +53,7 @@ RUN apt update \
 FROM ubuntu-base as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.18.0}
+ENV DENO_TAG ${DENO_TAG:-v1.20.3}
 
 # Install build tools
 RUN apt update \
