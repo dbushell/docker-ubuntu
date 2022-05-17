@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as ubuntu-base
+FROM ubuntu:22.04 as ubuntu-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -53,7 +53,7 @@ RUN apt update \
 FROM ubuntu-base as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.20.3}
+ENV DENO_TAG ${DENO_TAG:-v1.21.3}
 
 # Install build tools
 RUN apt update \
