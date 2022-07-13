@@ -2,6 +2,8 @@ FROM ubuntu:22.04 as ubuntu-base
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG TARGETARCH
+
 ARG USER
 ENV USER ${USER:-user}
 ARG PUID
@@ -21,7 +23,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y curl dnsutils git htop iproute2 iputils-ping locales lsb-release net-tools sudo screen tzdata vim wget zsh
+  && apt install -y curl dnsutils git htop iproute2 iputils-ping locales lsb-release net-tools sudo screen tzdata unzip vim wget zsh
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8 \
@@ -50,40 +52,60 @@ RUN apt update \
   && apt upgrade -y \
   && apt install -y nodejs
 
-FROM ubuntu-base as ubuntu-deno
+# FROM ubuntu-base as ubuntu-deno
+
+# ARG DENO_TAG
+# ENV DENO_TAG ${DENO_TAG:-v1.23.2}
+
+# # Install build tools
+# RUN apt update \
+#   && apt upgrade -y \
+#   && apt install -y build-essential
+
+# WORKDIR ${HOME}
+# USER ${USER}
+
+# # Install Rust
+# ENV PATH "${HOME}/.cargo/bin:$PATH"
+# RUN curl https://sh.rustup.rs -o rustup.sh \
+#   && chmod +x rustup.sh \
+#   && ./rustup.sh -y
+
+# # Download and build Deno
+# RUN git clone https://github.com/denoland/deno.git -b ${DENO_TAG}
+# WORKDIR ${HOME}/deno
+# RUN cargo build --release --bin deno
+
+# FROM ubuntu-node
+
+# COPY --from=ubuntu-deno ${HOME}/deno/target/release/deno /usr/local/bin
+
+# # Ready default user
+# WORKDIR ${HOME}
+# USER ${USER}
+
+# Update NPM
+RUN npm install -g npm
+
+FROM ubuntu-node as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.23.2}
+ENV DENO_TAG ${DENO_TAG:-v1.23.4}
 
-# Install build tools
-RUN apt update \
-  && apt upgrade -y \
-  && apt install -y build-essential
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+    wget -c -O deno.zip "https://github.com/LukeChannings/deno-arm64/releases/download/${DENO_TAG}/deno-linux-arm64.zip"; \
+  else \
+    wget -c -O deno.zip "https://github.com/denoland/deno/releases/download/${DENO_TAG}/deno-x86_64-unknown-linux-gnu.zip"; \
+  fi \
+  && unzip -o deno.zip \
+  && rm -f deno.zip \
+  && mv deno /usr/local/bin
 
-WORKDIR ${HOME}
-USER ${USER}
-
-# Install Rust
-ENV PATH "${HOME}/.cargo/bin:$PATH"
-RUN curl https://sh.rustup.rs -o rustup.sh \
-  && chmod +x rustup.sh \
-  && ./rustup.sh -y
-
-# Download and build Deno
-RUN git clone https://github.com/denoland/deno.git -b ${DENO_TAG}
-WORKDIR ${HOME}/deno
-RUN cargo build --release --bin deno
-
-FROM ubuntu-node
-
-COPY --from=ubuntu-deno ${HOME}/deno/target/release/deno /usr/local/bin
+FROM ubuntu-deno
 
 # Ready default user
 WORKDIR ${HOME}
 USER ${USER}
-
-# Update NPM
-RUN npm install -g npm
 
 # Keep container alive
 CMD tail -f /dev/null

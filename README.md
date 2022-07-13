@@ -22,7 +22,6 @@ docker run -d \
 Docker Compose:
 
 ```yml
-version: '3'
 services:
   ubuntu:
     container_name: sandbox
