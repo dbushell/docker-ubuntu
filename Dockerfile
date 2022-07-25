@@ -90,7 +90,7 @@ RUN npm install -g npm
 FROM ubuntu-node as ubuntu-deno
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.23.4}
+ENV DENO_TAG ${DENO_TAG:-v1.24.0}
 
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
     wget -c -O deno.zip "https://github.com/LukeChannings/deno-arm64/releases/download/${DENO_TAG}/deno-linux-arm64.zip"; \
