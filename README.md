@@ -1,6 +1,6 @@
 # 🐳 Ubuntu Docker Sandbox
 
-A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, Deno, and Node.
+A configured Ubuntu sandbox container with Zsh and Starship shell prompt. Also with Vim, Git, Deno, Bun, and Node.
 
 [Why does this exists?](https://dbushell.com/2021/02/22/macos-big-reinstall-docker-traefik-localhost/)
 
@@ -29,7 +29,7 @@ services:
 ```
 
 ```sh
-docker-compose up -d \
+docker compose up -d \
   && docker exec -it sandbox zsh
 ```
 
@@ -41,12 +41,6 @@ docker-compose up -d \
 docker exec -it sandbox zsh
 ```
 
-or:
-
-```sh
-docker-compose exec sandbox zsh
-```
-
 ### Clean Up
 
 ```sh
@@ -55,4 +49,4 @@ docker stop sandbox && docker rm sandbox
 
 * * *
 
-[MIT License](/LICENSE) | Copyright © 2021 [David Bushell](https://dbushell.com) | [@dbushell](https://twitter.com/dbushell)
+[MIT License](/LICENSE) | Copyright © 2022 [David Bushell](https://dbushell.com) | [@dbushell](https://twitter.com/dbushell)

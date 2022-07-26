@@ -1,8 +1,9 @@
 FROM ubuntu:22.04 as ubuntu-base
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 ARG TARGETARCH
+
+ARG DENO_TAG
+ENV DENO_TAG ${DENO_TAG:-v1.24.0}
 
 ARG USER
 ENV USER ${USER:-user}
@@ -13,6 +14,8 @@ ENV PGID ${PGID:-1000}
 ENV HOME /home/${USER}
 ARG TZ
 ENV TZ ${TZ:-Europe/London}
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
 
@@ -52,46 +55,12 @@ RUN apt update \
   && apt upgrade -y \
   && apt install -y nodejs
 
-# FROM ubuntu-base as ubuntu-deno
-
-# ARG DENO_TAG
-# ENV DENO_TAG ${DENO_TAG:-v1.23.2}
-
-# # Install build tools
-# RUN apt update \
-#   && apt upgrade -y \
-#   && apt install -y build-essential
-
-# WORKDIR ${HOME}
-# USER ${USER}
-
-# # Install Rust
-# ENV PATH "${HOME}/.cargo/bin:$PATH"
-# RUN curl https://sh.rustup.rs -o rustup.sh \
-#   && chmod +x rustup.sh \
-#   && ./rustup.sh -y
-
-# # Download and build Deno
-# RUN git clone https://github.com/denoland/deno.git -b ${DENO_TAG}
-# WORKDIR ${HOME}/deno
-# RUN cargo build --release --bin deno
-
-# FROM ubuntu-node
-
-# COPY --from=ubuntu-deno ${HOME}/deno/target/release/deno /usr/local/bin
-
-# # Ready default user
-# WORKDIR ${HOME}
-# USER ${USER}
-
 # Update NPM
 RUN npm install -g npm
 
 FROM ubuntu-node as ubuntu-deno
 
-ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.24.0}
-
+# Install Deno
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
     wget -c -O deno.zip "https://github.com/LukeChannings/deno-arm64/releases/download/${DENO_TAG}/deno-linux-arm64.zip"; \
   else \
@@ -101,11 +70,14 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
   && rm -f deno.zip \
   && mv deno /usr/local/bin
 
-FROM ubuntu-deno
+FROM ubuntu-deno as ubuntu-bun
 
 # Ready default user
 WORKDIR ${HOME}
 USER ${USER}
+
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
 
 # Keep container alive
 CMD tail -f /dev/null
