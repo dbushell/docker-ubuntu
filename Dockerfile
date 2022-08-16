@@ -58,6 +58,8 @@ RUN apt update \
 # Update NPM
 RUN npm install -g npm
 
+RUN chown -R ${PUID}:${PGID} $HOME/.npm
+
 FROM ubuntu-node as ubuntu-deno
 
 # Install Deno
