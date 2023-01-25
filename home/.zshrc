@@ -15,8 +15,6 @@ export PATH="$HOME/.deno/bin:$PATH"
 export NPM_PACKAGES="$HOME/.npm/packages"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
-export DO_NOT_TRACK=1
-
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
