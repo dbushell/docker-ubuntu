@@ -10,10 +10,25 @@ export HISTFILE=~/.zsh_history
 
 export EDITOR=vim
 
-export PATH="$HOME/.deno/bin:$PATH"
-
+# NPM packages
 export NPM_PACKAGES="$HOME/.npm/packages"
 export PATH="$NPM_PACKAGES/bin:$PATH"
+
+# Bun packages
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "/home/user/.bun/_bun" ] && source "/home/user/.bun/_bun"
+
+# Deno packages
+export PATH="$HOME/.deno/bin:$PATH"
+
+# Go packages
+export PATH="$HOME/go/bin:$PATH"
+
+# Rust packages
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
 
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
