@@ -3,7 +3,7 @@ FROM ubuntu:22.04 as ubuntu-base
 ARG TARGETARCH
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.32.3}
+ENV DENO_TAG ${DENO_TAG:-v1.32.5}
 
 ARG USER
 ENV USER ${USER:-user}
@@ -26,7 +26,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y curl dnsutils git htop iproute2 iputils-ping locales lsb-release net-tools sudo screen tzdata unzip vim wget zsh exiftool ffmpeg sqlite3
+  && apt install -y \
+    dnsutils iproute2 iputils-ping locales lsb-release net-tools sudo tzdata \
+    curl htop screen unzip vim wget zsh \
+    exiftool ffmpeg git sqlite3
 
 # Configure localisation
 RUN locale-gen en_GB.UTF-8 \
