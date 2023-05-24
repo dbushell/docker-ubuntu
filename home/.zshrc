@@ -1,5 +1,9 @@
 # ~/.zshrc
 
+export DO_NOT_TRACK=1
+export HOMEBREW_NO_ANALYTICS=1
+export DISABLE_BUN_ANALYTICS=1
+
 export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
@@ -15,9 +19,8 @@ export NPM_PACKAGES="$HOME/.npm/packages"
 export PATH="$NPM_PACKAGES/bin:$PATH"
 
 # Bun packages
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "/home/user/.bun/_bun" ] && source "/home/user/.bun/_bun"
+export BUN_PACKAGES="$HOME/.bun"
+export PATH="$BUN_PACKAGES/bin:$PATH"
 
 # Deno packages
 export PATH="$HOME/.deno/bin:$PATH"
@@ -25,7 +28,7 @@ export PATH="$HOME/.deno/bin:$PATH"
 # Go packages
 export PATH="$HOME/go/bin:$PATH"
 
-# Rust packages
+# Rust cargo crates
 if [ -f "$HOME/.cargo/env" ]; then
   source "$HOME/.cargo/env"
 fi
