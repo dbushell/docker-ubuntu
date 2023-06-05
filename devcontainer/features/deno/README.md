@@ -15,7 +15,7 @@ https://github.com/denoland/deno
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | deno version | string | 1.34.1 |
+| version | deno version | string | 1.34.0 |
 
 
 
