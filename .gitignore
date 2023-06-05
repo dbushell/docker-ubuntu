@@ -1,6 +1,8 @@
 /*
 !.dockerignore
 !.gitignore
+!.github
+!devcontainer
 !build.sh
 !Dockerfile
 !LICENSE
