@@ -2,7 +2,7 @@
 
 set -e
 
-DENO_VERSION="${VERSION:-"1.34.0"}"
+DENO_VERSION="${VERSION:-"1.34.1"}"
 
 # Fetch binary for architecture
 if [ "$(uname -m)" = "aarch64" ]; then
