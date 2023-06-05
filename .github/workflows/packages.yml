@@ -23,7 +23,7 @@ jobs:
         uses: devcontainers/action@v1
         with:
           publish-features: "true"
-          base-path-to-features: "./devcontainer"
+          base-path-to-features: "./devcontainer/features"
           generate-docs: "true"
 
         env:
