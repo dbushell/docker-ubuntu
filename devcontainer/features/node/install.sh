@@ -10,11 +10,10 @@ apt update \
   && apt upgrade -y \
   && apt install -y nodejs
 
+cd $_CONTAINER_USER_HOME
+
+su $_CONTAINER_USER << EOF
 mkdir -p "$_CONTAINER_USER_HOME/.npm"
-
-cat > "$_CONTAINER_USER_HOME/.npmrc" \
-<< EOF
-prefix=~/.npm/packages
-EOF
-
+echo "prefix=~/.npm/packages" > "$_CONTAINER_USER_HOME/.npmrc"
 npm install -g npm npm-check-updates
+EOF
