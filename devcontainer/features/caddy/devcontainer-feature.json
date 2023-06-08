@@ -1,0 +1,26 @@
+{
+  "name": "Caddy",
+  "id": "caddy",
+  "version": "0.1.0",
+  "description": "https://caddyserver.com",
+  "options": {
+    "os": {
+      "type": "string",
+      "default": "linux",
+      "description": "caddy platform os",
+      "proposals": ["darwin", "linux", "windows"]
+    },
+    "arch": {
+      "type": "string",
+      "default": "amd64",
+      "description": "caddy platform arch",
+      "proposals": ["amd64", "arm64"]
+    },
+    "modules": {
+      "type": "string",
+      "default": "",
+      "description": "caddy modules (comma separated)",
+      "proposals": ["caddy-dns/cloudflare,caddyserver/replace-response"]
+    }
+  }
+}
