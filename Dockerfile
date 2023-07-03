@@ -3,7 +3,7 @@ FROM ubuntu:22.04 as ubuntu-base
 ARG TARGETARCH
 
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.34.2}
+ENV DENO_TAG ${DENO_TAG:-v1.34.3}
 
 ARG USER
 ENV USER ${USER:-user}
@@ -12,6 +12,8 @@ ENV PUID ${PUID:-1000}
 ARG PGID
 ENV PGID ${PGID:-1000}
 ENV HOME /home/${USER}
+ARG LANG
+ENV LANG ${LANG:-en_GB}
 ARG TZ
 ENV TZ ${TZ:-Europe/London}
 
@@ -32,8 +34,9 @@ RUN apt update \
     exiftool ffmpeg git sqlite3
 
 # Configure localisation
-RUN locale-gen en_GB.UTF-8 \
-  && update-locale LANG=en_GB.UTF-8
+RUN echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
+  && locale-gen $LANG.UTF-8 \
+  && update-locale LANG=$LANG.UTF-8
 
 # Install Starship shell prompt
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
@@ -83,6 +86,8 @@ USER ${USER}
 
 # Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
+
+FROM ubuntu-bun as ubuntu
 
 # Keep container alive
 CMD tail -f /dev/null

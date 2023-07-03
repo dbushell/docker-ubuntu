@@ -3,6 +3,7 @@ FROM mcr.microsoft.com/devcontainers/base:ubuntu
 ENV VSCODE_USER vscode
 ENV VSCODE_HOME /home/vscode
 
+ENV LANG ${LANG:-en_GB}
 ENV TZ ${TZ:-Europe/London}
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -11,8 +12,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && echo $TZ > /etc/timezone
 
-RUN locale-gen en_GB.UTF-8 \
-  && update-locale LANG=en_GB.UTF-8
+RUN echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
+  && locale-gen $LANG.UTF-8 \
+  && update-locale LANG=$LANG.UTF-8
 
 RUN apt update \
   && apt upgrade -y \
