@@ -14,9 +14,9 @@ Docker CLI:
 
 ```sh
 docker run -d \
-  --name=sandbox \
+  --name=ubuntu_sandbox \
   ghcr.io/dbushell/ubuntu \
-  && docker exec -it sandbox zsh
+  && docker exec -it ubuntu_sandbox zsh
 ```
 
 Docker Compose:
@@ -24,13 +24,13 @@ Docker Compose:
 ```yml
 services:
   ubuntu:
-    container_name: sandbox
+    container_name: ubuntu_sandbox
     image: ghcr.io/dbushell/ubuntu
 ```
 
 ```sh
 docker compose up -d \
-  && docker exec -it sandbox zsh
+  && docker exec -it ubuntu_sandbox zsh
 ```
 
 (Enter `exit` to escape the container.)
@@ -38,13 +38,13 @@ docker compose up -d \
 ### Shell Access
 
 ```sh
-docker exec -it sandbox zsh
+docker exec -it ubuntu_sandbox zsh
 ```
 
 ### Clean Up
 
 ```sh
-docker stop sandbox && docker rm sandbox
+docker stop ubuntu_sandbox && docker rm ubuntu_sandbox
 ```
 
 * * *
