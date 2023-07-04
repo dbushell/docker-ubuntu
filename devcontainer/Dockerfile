@@ -10,9 +10,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Configure timezone and localisation
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-  && echo $TZ > /etc/timezone
-
-RUN echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
+  && echo $TZ > /etc/timezone \
+  && echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
   && locale-gen $LANG.UTF-8 \
   && update-locale LANG=$LANG.UTF-8
 
@@ -33,9 +32,7 @@ RUN usermod --shell /usr/bin/zsh $VSCODE_USER \
   $VSCODE_HOME/.vim/swap \
   $VSCODE_HOME/.vim/undo
 
-COPY home/.config/ ${VSCODE_HOME}/.config/
-COPY home/.vimrc ${VSCODE_HOME}/.vimrc
-COPY home/.zshrc ${VSCODE_HOME}/.zshrc
+COPY home/ ${VSCODE_HOME}/
 
 # Fix permissions
 RUN chown -R $VSCODE_USER:$VSCODE_USER $VSCODE_HOME

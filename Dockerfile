@@ -21,25 +21,20 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
 
-# Configure timezone
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-  && echo $TZ > /etc/timezone
-
 # Update system and install packages
 RUN apt update \
   && apt upgrade -y \
   && apt install -y \
     dnsutils iproute2 iputils-ping locales lsb-release net-tools sudo tzdata \
-    curl htop screen unzip vim wget zsh \
-    exiftool ffmpeg git sqlite3
+    curl git htop screen unzip vim wget zsh
+    # exiftool ffmpeg sqlite3
 
-# Configure localisation
-RUN echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
+# Configure timezone and localisation
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+  && echo $TZ > /etc/timezone \
+  && echo $LANG.UTF-8 UTF-8 > /etc/locale.gen \
   && locale-gen $LANG.UTF-8 \
   && update-locale LANG=$LANG.UTF-8
-
-# Install Starship shell prompt
-RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 # Setup user and home directory
 RUN useradd -u ${PUID} -U -d ${HOME} -s /bin/zsh ${USER} \
@@ -53,22 +48,22 @@ RUN useradd -u ${PUID} -U -d ${HOME} -s /bin/zsh ${USER} \
 COPY home/ ${HOME}/
 RUN chown -R ${PUID}:${PGID} $HOME
 
-FROM ubuntu-base as ubuntu-node
+# Install Starship shell prompt
+RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 
 # Install NPM and Node
+FROM ubuntu-base as ubuntu-node
+
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash
 RUN apt update \
   && apt upgrade -y \
-  && apt install -y nodejs
-
-# Update NPM
-RUN npm install -g npm
-
-RUN chown -R ${PUID}:${PGID} $HOME/.npm
-
-FROM ubuntu-node as ubuntu-deno
+  && apt install -y nodejs \
+  && npm install -g npm \
+  && chown -R ${PUID}:${PGID} $HOME/.npm
 
 # Install Deno
+FROM ubuntu-node as ubuntu-deno
+
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
     wget -c -O deno.zip "https://github.com/LukeChannings/deno-arm64/releases/download/${DENO_TAG}/deno-linux-arm64.zip"; \
   else \
@@ -78,13 +73,13 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
   && rm -f deno.zip \
   && mv deno /usr/local/bin
 
+# Install Bun
 FROM ubuntu-deno as ubuntu-bun
 
 # Ready default user
 WORKDIR ${HOME}
 USER ${USER}
 
-# Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
 
 FROM ubuntu-bun as ubuntu
