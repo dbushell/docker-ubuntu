@@ -1,7 +1,4 @@
-# ~/.zshrc
-
 export DO_NOT_TRACK=1
-export HOMEBREW_NO_ANALYTICS=1
 export DISABLE_BUN_ANALYTICS=1
 
 export LC_ALL=en_GB.UTF-8
