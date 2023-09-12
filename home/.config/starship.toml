@@ -1,11 +1,7 @@
-# ~/.config/starship.toml
-
 format = "🐳 $all"
 
 [username]
-style_root = "magenta bold"
-style_user = "green bold"
-format = "[$user]($style)"
+format = "[$user](dim)"
 show_always = true
 
 [hostname]
@@ -16,4 +12,4 @@ ssh_only = false
 style = "dimmed"
 disabled = false
 threshold = -1
-format = "[${ram}]($style) "
+format = "[${ram_pct}]($style) "
