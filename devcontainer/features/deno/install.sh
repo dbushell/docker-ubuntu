@@ -2,7 +2,7 @@
 
 set -e
 
-DENO_VERSION="${VERSION:-"1.36.0"}"
+DENO_VERSION="${VERSION:-"1.37.0"}"
 
 if [ "$(uname -m)" = "aarch64" ]; then
   wget -c -O deno.zip "https://github.com/LukeChannings/deno-arm64/releases/download/v${DENO_VERSION}/deno-linux-arm64.zip";

@@ -2,8 +2,10 @@ FROM ubuntu:22.04 as ubuntu-base
 
 ARG TARGETARCH
 
+ARG NODE_TAG
+ENV NODE_TAG ${NODE_TAG:-20.x}
 ARG DENO_TAG
-ENV DENO_TAG ${DENO_TAG:-v1.36.4}
+ENV DENO_TAG ${DENO_TAG:-v1.37.0}
 
 ARG USER
 ENV USER ${USER:-user}
@@ -25,8 +27,8 @@ WORKDIR /root
 RUN apt update \
   && apt upgrade -y \
   && apt install -y \
-    dnsutils iproute2 iputils-ping locales lsb-release net-tools sudo tzdata \
-    curl git htop screen unzip vim wget zsh
+    ca-certificates dnsutils iproute2 iputils-ping locales lsb-release net-tools sudo tzdata \
+    curl git gnupg htop screen unzip vim wget zsh
     # exiftool ffmpeg sqlite3
 
 # Configure timezone and localisation
@@ -54,9 +56,11 @@ RUN curl -fsSL https://starship.rs/install.sh | sh -s -- -y
 # Install NPM and Node
 FROM ubuntu-base as ubuntu-node
 
-RUN curl -fsSL https://deb.nodesource.com/setup_current.x | bash
-RUN apt update \
-  && apt upgrade -y \
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+    | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+  && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_TAG} nodistro main" \
+    | tee /etc/apt/sources.list.d/nodesource.list \
+  && apt update \
   && apt install -y nodejs \
   && npm install -g npm \
   && chown -R ${PUID}:${PGID} $HOME/.npm

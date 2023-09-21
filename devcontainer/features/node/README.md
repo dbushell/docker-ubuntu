@@ -15,7 +15,7 @@ https://nodejs.org
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | node version | string | current |
+| version | node version | string | 20.x |
 
 
 
