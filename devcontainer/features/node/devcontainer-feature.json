@@ -1,12 +1,12 @@
 {
   "name": "Node",
   "id": "node",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "https://nodejs.org",
   "options": {
     "version": {
       "type": "string",
-      "default": "20.x",
+      "default": "21.x",
       "description": "node version"
     }
   }

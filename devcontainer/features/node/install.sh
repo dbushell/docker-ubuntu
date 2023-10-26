@@ -2,7 +2,7 @@
 
 set -e
 
-NODE_VERSION="${VERSION:-"20.x"}"
+NODE_VERSION="${VERSION:-"21.x"}"
 
 # https://github.com/nodesource/distributions#installation-instructions
 apt update
