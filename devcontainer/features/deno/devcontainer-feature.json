@@ -1,12 +1,12 @@
 {
   "name": "Deno",
   "id": "deno",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "https://deno.com/runtime",
   "options": {
     "version": {
       "type": "string",
-      "default": "1.37.2",
+      "default": "1.38.1",
       "description": "deno version"
     }
   }
