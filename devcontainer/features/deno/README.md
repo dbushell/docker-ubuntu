@@ -15,7 +15,7 @@ https://deno.com/runtime
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | deno version | string | 1.39.0 |
+| version | deno version | string | 1.40.0 |
 
 
 

@@ -49,4 +49,4 @@ docker stop ubuntu_sandbox && docker rm ubuntu_sandbox
 
 * * *
 
-[MIT License](/LICENSE) | Copyright © 2023 [David Bushell](https://dbushell.com)
+[MIT License](/LICENSE) | Copyright © 2024 [David Bushell](https://dbushell.com)
